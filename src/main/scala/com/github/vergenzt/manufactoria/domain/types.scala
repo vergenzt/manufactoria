@@ -1,4 +1,4 @@
-package com.github.vergenzt.manufactoria
+package com.github.vergenzt.manufactoria.domain
 
 package object types {
   type Vec = (Int, Int)
@@ -21,10 +21,10 @@ package object types {
   }
 
   object Cardinals {
-    object N extends Vec(-1, 0)
-    object S extends Vec( 1, 0)
-    object E extends Vec( 0, 1)
-    object W extends Vec( 0,-1)
+    val N: Vec = (-1, 0)
+    val S: Vec = ( 1, 0)
+    val E: Vec = ( 0, 1)
+    val W: Vec = ( 0,-1)
   }
 
   sealed trait Dot

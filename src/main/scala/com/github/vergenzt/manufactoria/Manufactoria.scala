@@ -1,17 +1,21 @@
 package com.github.vergenzt.manufactoria
 
-import types._
+import domain._
+import domain.types._
+import scala.scalajs.js.annotation.JSExportAll
 
+@JSExportAll
 object Manufactoria {
+
   /** Run an example solution. */
-  def main(args: Array[String]): Unit = {
+  def main(): Unit = {
     import Cardinals._
     import Dot._
 
     val solution = new Machine {
       override val size = (3, 1)
       override val components = Map(
-        (1,1) -> Start(S),
+        (1,1) -> Start(Cardinals.S),
         (2,1) -> Branch(E, R, B),
         (3,1) -> End()
       )
@@ -19,6 +23,6 @@ object Manufactoria {
 
     println(solution.toString())
 
-    println(Examples.StartsWithBlue.checkMachine(solution))
+    println(example.StartsWithBlue.checkMachine(solution))
   }
 }

@@ -1,8 +1,8 @@
-package com.github.vergenzt.manufactoria
+package com.github.vergenzt.manufactoria.domain
 
 import types._
 
-trait Problem {
+abstract class Problem {
   def description: String
 
   /** The starter machine with size constraints and fixed components. */

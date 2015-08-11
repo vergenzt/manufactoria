@@ -1,9 +1,11 @@
-package com.github.vergenzt.manufactoria
+package com.github.vergenzt.manufactoria.domain
 
 import types._
+import Cardinals._
+import scala.scalajs.js.annotation.JSExportAll
 
 /** A single component at a single location in a grid. */
-sealed abstract class Component {
+sealed trait Component {
   def step(state: State): State
 
   override def toString(): String = {

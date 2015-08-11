@@ -1,4 +1,4 @@
-package com.github.vergenzt.manufactoria
+package com.github.vergenzt.manufactoria.domain
 
 import types._
 

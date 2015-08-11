@@ -7,11 +7,52 @@ eclipse {
   }
 }
 
+ext.v = [
+  scala: "2.11",
+  scalaRelease: "2.11.7",
+  scalaJs: "0.6",
+  scalaJsRelease: "0.6.4"
+]
+
 repositories {
   mavenCentral()
 }
 
-dependencies {
-  compile "org.scala-lang:scala-library:2.11.1"
+configurations {
+  provided
 }
+
+dependencies {
+  compile "org.scala-lang:scala-library:${v.scalaRelease}"
+  compile "org.scala-js:scalajs-library_${v.scala}:${v.scalaJsRelease}"
+
+  provided "org.scala-js:scalajs-compiler_${v.scalaRelease}:${v.scalaJsRelease}"
+  provided "org.scala-js:scalajs-cli_${v.scala}:${v.scalaJsRelease}"
+}
+
+compileScala {
+  scalaCompileOptions.additionalParameters = [
+    "-feature",
+    "-Xplugin:" + configurations.provided.find { it.name.startsWith("scalajs-compiler_") }
+  ]
+}
+
+task createBuildDir() << {
+  mkdir(project.buildDir.absolutePath + "/resources/main")
+}
+
+task compileScalaJs(type: JavaExec, dependsOn: [compileScala, createBuildDir]) {
+  main = "org.scalajs.cli.Scalajsld"
+  args = [
+    "-n", // I decided not to optimize for now due to mem use
+    "--stdlib",
+    configurations.runtime.find { it.name.startsWith("scalajs-library_") },
+    "-o",
+    project.buildDir.absolutePath + "/resources/main/${project.name}.js"
+  ] + (configurations.runtime + files(compileScala.destinationDir))
+  classpath configurations.runtime
+  classpath configurations.provided
+}
+
+tasks.assemble.dependsOn(compileScalaJs)
 

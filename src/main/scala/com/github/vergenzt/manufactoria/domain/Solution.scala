@@ -1,7 +1,6 @@
-package com.github.vergenzt.manufactoria
+package com.github.vergenzt.manufactoria.domain
 
 import scala.collection.mutable
-
 import types._
 
 class Solution(base: Machine) extends Machine {
